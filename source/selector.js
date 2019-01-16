@@ -48,6 +48,7 @@ if (!marker_selecting) {
   }
 
   var moveListener = window.addEventListener('mousemove', function (event) {
+    if (!marker_selecting) return;
     var target = event.target;
     if (event.target.id === 'marker_selector'
       || event.target.tagName === 'BODY'
@@ -65,42 +66,55 @@ if (!marker_selecting) {
     event.stopPropagation();
     selected(selectedTarget);
     stop();
-  });
+  }, true);
 
   var keyListener = window.addEventListener('keydown', function (event) {
-    if (marker_selecting) event.preventDefault();
+    if (!marker_selecting) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    event.stopPropagation();
     var target = selectedTarget;
     switch (event.key) {
+      case "w": // Go Parent
+      case "W":
       case "ArrowUp":
         highlight(target.parentElement);
         break;
+      case "s": // Go FirstChild
+      case "S":
       case "ArrowDown":
         highlight(target.firstElementChild);
         break;
+      case "a": // Go PrevouseElement
+      case "A":
       case "ArrowLeft":
         highlight(target.previousElementSibling);
         break;
+      case "d": // Go NextElement
+      case "D":
       case "ArrowRight":
         highlight(target.nextElementSibling);
         break;
+      case " ": // Mark!
       case "Enter":
         selected(target);
         stop();
         break;
+      case "Backspace": // Remove (Incompleted)
       case "Delete":
         console.log(event.target);
         if (event.target.className === 'html_marker') {
           event.target.remove();
         }
         break;
-      case "Home":
+      case "Home": // Clear
         var markers = document.getElementsByClassName('html_marker');
         for (marker of markers) marker.remove();
         break;
-      case "Escape":
+      case "Escape": // Stop
       case "End":
         stop();
         break;
     }
-  });
+  }, true);
 }
