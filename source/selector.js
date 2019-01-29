@@ -80,38 +80,38 @@ if (!marker_selecting) {
       case "ArrowUp":
         highlight(target.parentElement);
         break;
-      case "s": // Go FirstChild
+      case "s": // Go First Child
       case "S":
       case "ArrowDown":
         highlight(target.firstElementChild);
         break;
-      case "a": // Go PrevouseElement
+      case "a": // Go Previouse Element
       case "A":
       case "ArrowLeft":
         highlight(target.previousElementSibling);
         break;
-      case "d": // Go NextElement
+      case "d": // Go Next Element
       case "D":
       case "ArrowRight":
         highlight(target.nextElementSibling);
         break;
-      case " ": // Mark!
+      case " ": // Mark It!
       case "Enter":
         selected(target);
         stop();
         break;
-      case "Backspace": // Remove (Incompleted)
+      case "Backspace": // Remove Mark (Not Implemented)
       case "Delete":
         console.log(event.target);
         if (event.target.className === 'html_marker') {
           event.target.remove();
         }
         break;
-      case "Home": // Clear
+      case "Home": // Clear All Marks
         var markers = document.getElementsByClassName('html_marker');
         for (marker of markers) marker.remove();
         break;
-      case "Escape": // Stop
+      case "Escape": // Cancel Selection
       case "End":
         stop();
         break;
